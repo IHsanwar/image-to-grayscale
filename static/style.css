@@ -14,7 +14,8 @@
       letter-spacing: -1px;
   }
   a {
-    color: #5469d4;
+    color: #7e91ec;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     text-decoration: unset;
   }
   .login-root {
