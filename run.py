@@ -21,10 +21,20 @@ def process_image(img_path, transformation_type):
     # Apply the selected transformation
     if transformation_type == 'gray':
         image_transformed = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
+
     elif transformation_type == 'saturation':
         image_hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
         image_hsv[:, :, 1] = cv2.add(image_hsv[:, :, 1], 50)  # Increase saturation
         image_transformed = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2BGR)
+
+    elif transformation_type == 'hue':
+        hue_shift = 50
+        # Convert BGR to HSV
+        image_hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
+
+        image_hsv[:, :, 0] = (image_hsv[:, :, 0] + hue_shift) % 180
+        image_transformed = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2BGR)
+
     else:
         return None, {"error": "Unsupported transformation type."}
 
@@ -52,7 +62,7 @@ def index():
             return jsonify({"error": "No selected file"}), 400
 
         transformation_type = request.form.get('type')
-        if transformation_type not in ['gray', 'saturation']:
+        if transformation_type not in ['gray', 'saturation','hue']:
             return jsonify({"error": "Invalid transformation type selected"}), 400
 
         filename = secure_filename(file.filename)
@@ -61,11 +71,9 @@ def index():
         file_path = os.path.join(upload_folder, filename)
         file.save(file_path)
 
-        # Process the uploaded image and get the result filename
         result_filename, result_info = process_image(file_path, transformation_type)
 
         if result_filename:
-            # Send the processed file for download
             return send_file(result_filename, as_attachment=True)
         else:
             return jsonify(result_info), 400  # Return error message if processing failed
