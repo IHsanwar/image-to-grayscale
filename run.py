@@ -3,6 +3,7 @@ import cv2
 import os
 from werkzeug.utils import secure_filename
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['RESULT_FOLDER'] = 'img-result'
@@ -11,14 +12,13 @@ def process_image(img_path, transformation_type):
     # Read the image from the specified path
     image_bgr = cv2.imread(img_path)
 
-    # Check if image is successfully loaded
+    # Chec
     if image_bgr is None:
         return None, {"error": f"Unable to read image from {img_path}. Please check the file path."}
 
     result_folder = app.config['RESULT_FOLDER']
     os.makedirs(result_folder, exist_ok=True)
 
-    # Apply the selected transformation
     if transformation_type == 'gray':
         image_transformed = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
 
@@ -70,7 +70,7 @@ def index():
         os.makedirs(upload_folder, exist_ok=True)
         file_path = os.path.join(upload_folder, filename)
         file.save(file_path)
-
+ 
         result_filename, result_info = process_image(file_path, transformation_type)
 
         if result_filename:

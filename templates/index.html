@@ -3,45 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Image Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="login-root">
-        <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh; flex-grow: 1;">
-            <div class="loginbackground box-background--white padding-top--64">
-                <div class="loginbackground-gridContainer">
-                    <!-- Background and other styling elements -->
-                </div>
+    <header>
+        <h1>Image Editor</h1>
+    </header>
+
+    <div class="container">
+        <div class="title">Change Image Color Easily</div>
+        <div class="description">Make It Easier</div>
+
+        <div class="images">
+            <img src="{{ url_for('static', filename='images/image.jpeg') }}" alt="Rotated Image" class="img-1">
+            <img src="{{ url_for('static', filename='images/991.jpeg') }}" alt="Rotated Image" class="img-2">
+        </div>
+
+        <a href="#frm"><button class="upload-button">Upload</button></a>
+
+        <div id="upload"></div>
+
+        <div class="steps">
+            <div class="step">
+                <h2>1. Upload</h2>
+                <p>Upload your photo to change its colors. (PNG, JPEG, JPG)</p>
             </div>
-            <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
-                <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-                    <h1><a href="http://blog.stackfindover.com/" rel="dofollow">Image Editor</a></h1>
-                </div>
-                <div class="formbg-outer">
-                    <div class="formbg">
-                        <div class="formbg-inner padding-horizontal--48">
-                            <span class="padding-bottom--15">Edit color for your image!</span>
-                            <form action="/" method="post" enctype="multipart/form-data" target="_blank">
-                                <div class="field padding-bottom--24">
-                                    <input type="file" name="file" accept="image/*" required>
-                                </div>
-                                <div class="field padding-bottom--24">
-                                    <label for="type">Select transformation:</label>
-                                    <select name="type" id="type">
-                                        <option value="gray">Grayscale</option>
-                                        <option value="saturation">Saturation Increase</option>
-                                        <option value="hue" >HUE increase</option>
-                                    </select>
-                                </div>
-                                <div class="field padding-bottom--24">
-                                    <input type="submit" name="submit" value="Continue">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            <div class="step">
+                <h2>2. Select Colors</h2>
+                <p>Select the source & target transform in your image.</p>
+            </div>
+            <div class="step">
+                <h2>3. Download</h2>
+                <p>Instantly download your transformed image.</p>
             </div>
         </div>
+    </div>
+
+    <div class="form-container">
+        <div id="frm"></div>
+        <span>Transform your image!</span>
+        <form action="/" method="post" enctype="multipart/form-data" target="_blank">
+            <input type="file" name="file" accept="image/*" required>
+            <label for="type">Select transformation:</label>
+            <select name="type" id="type">
+                <option value="gray">Grayscale</option>
+                <option value="saturation">Saturation Increase</option>
+                <option value="hue" >HUE Increase</option>
+            </select>
+            <input type="submit" name="submit" value="Continue">
+        </form>
     </div>
 </body>
 </html>
